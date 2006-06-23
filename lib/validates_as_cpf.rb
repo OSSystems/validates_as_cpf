@@ -39,20 +39,20 @@ module ValidaCPF
         soma += valor[i] * (10 - i)
       end
         
-      soma = soma - (11 * (soma/11))
-      dv1 = soma < 2 ? 0 : 11 - soma
-        
+      resto = soma % 11
+      dv1 = resto < 2 ? 0 : 11 - resto
+
       if dv1 == valor[9]
         # Calcula o segundo digito verificador
         soma = 0
         0.upto(8) do |i|
           soma += valor[i] * (11 - i)
         end
-
         soma += dv1 * 2
-        valorr = (soma / 11) * 11
-        resultado = soma - valorr
-        dv2 = resultado < 2 ? 0 : 11 - resultado
+
+        resto = soma % 11
+
+        dv2 = resto < 2 ? 0 : 11 - resto
 
         return true if dv2 == valor[10]
       end
