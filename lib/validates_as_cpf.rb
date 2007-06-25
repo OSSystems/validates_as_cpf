@@ -30,6 +30,7 @@ module ValidaCPF
                99999999999
                00000000000}
 
+    cpf = cpf.to_s
     valor = cpf.scan(/[0-9]/).collect{|x| x.to_i}
     
     if valor.length == 11 and not nulos.member?(valor.to_s)
