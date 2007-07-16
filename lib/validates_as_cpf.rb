@@ -31,9 +31,11 @@ module ValidaCPF
                00000000000}
 
     cpf = cpf.to_s
+    (11 - cpf.length).times do cpf = "0#{cpf}" end
+
     valor = cpf.scan(/[0-9]/).collect{|x| x.to_i}
-    
-    if valor.length == 11 and not nulos.member?(valor.to_s)
+
+    if not nulos.member?(valor.to_s)
       # Calcula o primeiro digito verificador
       soma = 0
       0.upto(8) do |i|

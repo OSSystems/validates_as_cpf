@@ -55,6 +55,12 @@ class CPFsTest < Test::Unit::TestCase
   def test_cpf_valido_com_bignum
     cpf_valido = CPFData.create(:id => 1, :cpf => 80493254072)
 
-    assert ( cpf_valido.save ), "CPF valido com valor de classe Bignum nao foi salvo."
+    assert(( cpf_valido.save ), 
+           "CPF valido com valor de classe Bignum nao foi salvo.")
+
+    cpf_valido = CPFData.create(:id => 2, :cpf => 01362421030)
+
+    assert(( cpf_valido.save ), 
+           "CPF valido iniciando com zero nao foi salvo.")
   end
 end
