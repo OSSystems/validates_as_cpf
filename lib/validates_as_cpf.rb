@@ -35,6 +35,8 @@ module ValidaCPF
 
     valor = cpf.scan(/[0-9]/).collect{|x| x.to_i}
 
+    return nil if valor.blank?
+
     if not nulos.member?(valor.to_s)
       # Calcula o primeiro digito verificador
       soma = 0

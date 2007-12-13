@@ -40,6 +40,12 @@ class CPFsTest < Test::Unit::TestCase
     assert (not cpf_invalido.save), "CPF invalido foi salvo"
   end
   
+  def test_cpf_invalido_com_letras
+    cpf_invalido = CPFData.create(:id => 1, :cpf => "abcdefghijk")
+
+    assert ( not cpf_invalido.save ), "CPF invalido (contem letras) foi salvo."
+  end
+  
   def test_cpf_invalido
     cpf_invalido = CPFData.create(:id => 1, :cpf => "542.123.456-98")
 
@@ -58,9 +64,17 @@ class CPFsTest < Test::Unit::TestCase
     assert(( cpf_valido.save ), 
            "CPF valido com valor de classe Bignum nao foi salvo.")
 
-    cpf_valido = CPFData.create(:id => 2, :cpf => 01362421030)
+#    andre: inteiro comecando com zero converte numero octal para decimal
+#    irb(main):001:0> 01362421030
+#    => 197796376
+#    irb(main):002:0> 01362421030.to_s(8)
+#    => "1362421030"
+#    irb(main):003:0> 01362421030.to_s(10)
+#    => "197796376"
+#
+#    cpf_valido = CPFData.create(:id => 2, :cpf => 01362421030)
 
-    assert(( cpf_valido.save ), 
-           "CPF valido iniciando com zero nao foi salvo.")
+#    assert(( cpf_valido.save ), 
+#           "CPF valido iniciando com zero nao foi salvo.")
   end
 end
