@@ -30,8 +30,17 @@ module ValidaCPF
                99999999999
                00000000000}
 
-    cpf = cpf.to_s
-    (11 - cpf.length).times do cpf = "0#{cpf}" end
+    if cpf.kind_of?(Numeric)
+      base10 = cpf.to_s(10) # normalmente queremos inteiros na base 10
+      if base10.size == 11
+        cpf = base10
+      else
+        base8 = "0" + cpf.to_s(8) # mas cpf comecando por 0 tem esse detalhezinho, por causa do ruby que interpreta o valor como octal
+        cpf = base8
+      end
+    else
+      cpf = cpf.to_s
+    end
 
     valor = cpf.scan(/[0-9]/).collect{|x| x.to_i}
 

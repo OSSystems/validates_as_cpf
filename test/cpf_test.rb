@@ -42,8 +42,21 @@ class CPFsTest < Test::Unit::TestCase
   
   def test_cpf_invalido_com_letras
     cpf_invalido = CPFData.create(:id => 1, :cpf => "abcdefghijk")
+    assert (not cpf_invalido.save), "CPF invalido (contem letras) foi salvo."
 
-    assert ( not cpf_invalido.save ), "CPF invalido (contem letras) foi salvo."
+    cpf_invalido = CPFData.create(:id => 2, :cpf => "nao possuo")
+    assert (not cpf_invalido.save), "CPF invalido (contem letras) foi salvo."
+
+    cpf_invalido = CPFData.create(:id => 3, :cpf => "nao tenho")
+    assert (not cpf_invalido.save), "CPF invalido (contem letras) foi salvo."
+  end
+
+  def test_cpf_invalido_com_sinais
+    cpf_invalido = CPFData.create(:id => 1, :cpf => "*")
+    assert (not cpf_invalido.save), "CPF invalido (contem sinal) foi salvo."
+
+    cpf_invalido = CPFData.create(:id => 2, :cpf => "-")
+    assert (not cpf_invalido.save), "CPF invalido (contem sinal) foi salvo."
   end
   
   def test_cpf_invalido
@@ -71,10 +84,10 @@ class CPFsTest < Test::Unit::TestCase
 #    => "1362421030"
 #    irb(main):003:0> 01362421030.to_s(10)
 #    => "197796376"
-#
-#    cpf_valido = CPFData.create(:id => 2, :cpf => 01362421030)
 
-#    assert(( cpf_valido.save ), 
-#           "CPF valido iniciando com zero nao foi salvo.")
+    cpf_valido = CPFData.create(:id => 2, :cpf => 01362421030)
+
+    assert(( cpf_valido.save ), 
+           "CPF valido iniciando com zero nao foi salvo.")
   end
 end
