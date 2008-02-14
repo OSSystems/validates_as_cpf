@@ -26,6 +26,10 @@ class CPFsTest < Test::Unit::TestCase
     cpf_invalido = CPFData.new(:id => 1, :cpf => "00000000000")
     
     assert (not cpf_invalido.save), "CPF invalido foi salvo"
+
+    cpf_invalido = CPFData.new(:id => 2, :cpf => "020")
+    
+    assert (not cpf_invalido.save), "CPF invalido foi salvo"
   end
   
   def test_cpf_valido_sem_pontuacao
@@ -89,5 +93,10 @@ class CPFsTest < Test::Unit::TestCase
 
     assert(( cpf_valido.save ), 
            "CPF valido iniciando com zero nao foi salvo.")
+
+#    nao eh uma boa ideia armazenar CPFs como numeros
+#    cpf_valido = CPFData.create(:id => 3, :cpf => 00480552045)
+#    assert(( cpf_valido.save ), 
+#           "CPF valido iniciando com zero nao foi salvo.")
   end
 end

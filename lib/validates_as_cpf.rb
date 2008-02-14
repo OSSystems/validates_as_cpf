@@ -46,7 +46,7 @@ module ValidaCPF
 
     return nil if valor.blank?
 
-    if not nulos.member?(valor.to_s)
+    if !nulos.member?(valor.to_s) && valor.size == 11
       # Calcula o primeiro digito verificador
       soma = 0
       0.upto(8) do |i|
