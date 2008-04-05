@@ -42,6 +42,9 @@ module ValidaCPF
       cpf = cpf.to_s
     end
 
+    #Testa se contem letras entre a-z ou A-Z
+    return nil if (cpf =~ /[a-zA-Z]/)    
+
     valor = cpf.scan(/[0-9]/).collect{|x| x.to_i}
 
     return nil if valor.blank?

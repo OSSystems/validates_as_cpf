@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/abstract_unit'
-require '../lib/validates_as_cpf'
+require File.dirname(__FILE__) + '/../lib/validates_as_cpf'
 
 # Modelo
 class CPFData < ActiveRecord::Base
@@ -99,4 +99,19 @@ class CPFsTest < Test::Unit::TestCase
 #    assert(( cpf_valido.save ), 
 #           "CPF valido iniciando com zero nao foi salvo.")
   end
+
+  def test_cpf_invalid_with_characters_and_numbers
+    cpf_valido = CPFData.create(:cpf => "88318850068")
+    cpf_invalido1 = CPFData.create(:cpf => "abc88318850068")
+    cpf_invalido2 = CPFData.create(:cpf => "88318850068abc")
+    cpf_invalido3 = CPFData.create(:cpf => "883188abc50068")
+    cpf_invalido4 = CPFData.create(:cpf => "abc883188abc50068abc")
+
+    assert cpf_valido.save, "CPF valido nao foi salvo"
+    assert !(cpf_invalido1.save), "CPF com letras no comeco foi considerado valido"
+    assert !(cpf_invalido2.save), "CPF com letras no inicio foi considerado valido"
+    assert !(cpf_invalido3.save), "CPF com letras no meio foi considerado valido"
+    assert !(cpf_invalido4.save), "CPF com letras foi considerado valido"
+  end
+
 end
